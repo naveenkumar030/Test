@@ -7,8 +7,8 @@ interface LeftSidebarProps {
   currentQuestionIndex: number;
   onSelectQuestion: (index: number) => void;
   questionTimes: { [questionId: string]: number }; // in seconds
-  answers: { [questionId: string]: string | boolean }; // selected option id or code submitted
-  markedForReview: { [questionId: string]: boolean };
+  answers?: { [questionId: string]: string | boolean };
+  markedForReview?: { [questionId: string]: boolean };
 }
 
 export const LeftSidebar: React.FC<LeftSidebarProps> = ({
@@ -17,8 +17,6 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
   currentQuestionIndex,
   onSelectQuestion,
   questionTimes,
-  answers,
-  markedForReview,
 }) => {
   const [showExactSeconds, setShowExactSeconds] = useState(false);
   const currentQuestion = questions[currentQuestionIndex];
@@ -173,8 +171,6 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
         >
           {questions.map((q, idx) => {
             const isSelected = idx === currentQuestionIndex;
-            const isAnswered = !!answers[q.id];
-            const isMarked = !!markedForReview[q.id];
 
             return (
               <button
@@ -186,17 +182,9 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
                     ? 'bg-[#cfd3db] text-[#374151] font-normal shadow-2xs'
                     : 'text-[#4b5563] hover:bg-black/5 font-normal'
                 }`}
-                title={`Question ${idx + 1}${isAnswered ? ' (Answered)' : ''}${isMarked ? ' (Marked for Review)' : ''}`}
+                title={`Question ${idx + 1}`}
               >
                 <span>{idx + 1}</span>
-
-                {/* Status dot */}
-                {isAnswered && !isSelected && (
-                  <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                )}
-                {isMarked && !isAnswered && !isSelected && (
-                  <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                )}
               </button>
             );
           })}
