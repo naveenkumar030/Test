@@ -51,7 +51,7 @@ export const ProblemDetails: React.FC<ProblemDetailsProps> = ({ question }) => {
                 <span className="bg-[#fce7f3] text-[#9d174d] px-1 py-0.5 rounded text-xs font-mono">1</span>.
               </p>
             </div>
-          ) : (
+          ) : question.id === 'code-med-1' ? (
             <div className="space-y-3 leading-relaxed">
               <p>
                 A bookstore's display case can hold a set of distinct books in any order, and the store wants to know
@@ -63,6 +63,10 @@ export const ProblemDetails: React.FC<ProblemDetailsProps> = ({ question }) => {
                 Given the number of books, print the number of possible arrangements. A set of 0 books has exactly one
                 arrangement; the empty one.
               </p>
+            </div>
+          ) : (
+            <div className="space-y-3 leading-relaxed whitespace-pre-line text-gray-800">
+              {question.problemStatement}
             </div>
           )}
         </div>
@@ -88,11 +92,9 @@ export const ProblemDetails: React.FC<ProblemDetailsProps> = ({ question }) => {
             </ul>
           ) : (
             <ul className="list-disc pl-5 space-y-1">
-              <li>
-                Line 1:{' '}
-                <span className="bg-[#fce7f3] text-[#9d174d] px-1 py-0.5 rounded font-mono text-[11px]">num_books</span>
-                {' ; number of distinct books'}
-              </li>
+              {question.inputFormat.map((line, idx) => (
+                <li key={idx}>{line}</li>
+              ))}
             </ul>
           )}
         </div>

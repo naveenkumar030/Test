@@ -137,6 +137,36 @@ function runPythonAlgorithm(
     }
   }
 
+  if (problemId === 'code-med-2') {
+    // Maximum Contiguous Subarray Sum (Kadane's Algorithm)
+    const nums = lines.map(x => parseInt(x, 10)).filter(x => !isNaN(x));
+    if (nums.length === 0) return { stdout: '0' };
+    let maxSoFar = nums[0];
+    let currMax = nums[0];
+    for (let i = 1; i < nums.length; i++) {
+      currMax = Math.max(nums[i], currMax + nums[i]);
+      maxSoFar = Math.max(maxSoFar, currMax);
+    }
+    return { stdout: maxSoFar.toString() };
+  }
+
+  if (problemId === 'code-hard-2') {
+    // Longest Common Subsequence Length
+    if (lines.length < 2) return { stdout: '0' };
+    const s1 = lines[0];
+    const s2 = lines[1];
+    const m = s1.length;
+    const n = s2.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (s1[i - 1] === s2[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
+        else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+    return { stdout: dp[m][n].toString() };
+  }
+
   // Fallback direct execution
   return { stdout: lines.join(' ') };
 }
@@ -184,6 +214,34 @@ function runCompiledAlgorithm(
     } catch {
       return { stdout: '', stderr: 'NumberFormatException' };
     }
+  }
+
+  if (problemId === 'code-med-2') {
+    const nums = tokens.map(x => parseInt(x, 10)).filter(x => !isNaN(x));
+    if (nums.length === 0) return { stdout: '0' };
+    let maxSoFar = nums[0];
+    let currMax = nums[0];
+    for (let i = 1; i < nums.length; i++) {
+      currMax = Math.max(nums[i], currMax + nums[i]);
+      maxSoFar = Math.max(maxSoFar, currMax);
+    }
+    return { stdout: maxSoFar.toString() };
+  }
+
+  if (problemId === 'code-hard-2') {
+    if (tokens.length < 2) return { stdout: '0' };
+    const s1 = tokens[0];
+    const s2 = tokens[1];
+    const m = s1.length;
+    const n = s2.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (s1[i - 1] === s2[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
+        else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+    return { stdout: dp[m][n].toString() };
   }
 
   return { stdout: tokens.join(' ') };

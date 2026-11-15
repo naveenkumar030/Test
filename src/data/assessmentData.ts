@@ -396,6 +396,86 @@ export const assessmentSections: Section[] = [
         correctOptionId: 'b',
         explanation: 'Succinct means brief and clearly expressed. Verbose means using or expressed in more words than are needed.',
       },
+      {
+        id: 'verb-11',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'medium',
+        direction: 'Direction: Read the statement and answer the question based on inference.',
+        question: 'Statement: "Although solar panels have become significantly more affordable, battery storage systems remain a financial obstacle for widespread grid independence." What can be inferred?',
+        options: [
+          { id: 'a', text: 'Solar panels are no longer cost-effective to produce.' },
+          { id: 'b', text: 'High battery storage costs are slowing full independence from the electrical grid.' },
+          { id: 'c', text: 'Grid independence has already been achieved by most households.' },
+          { id: 'd', text: 'Batteries are no longer required for solar power setups.' },
+        ],
+        correctOptionId: 'b',
+        explanation: 'The statement directly indicates that while solar panels are affordable, expensive battery storage remains a barrier to full grid independence.',
+      },
+      {
+        id: 'verb-12',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'easy',
+        direction: 'Direction: Identify the relationship and choose the correct pair.',
+        question: 'OASIS : DESERT ::',
+        options: [
+          { id: 'a', text: 'Island : Ocean' },
+          { id: 'b', text: 'Mountain : Valley' },
+          { id: 'c', text: 'Forest : Tree' },
+          { id: 'd', text: 'River : Lake' },
+        ],
+        correctOptionId: 'a',
+        explanation: 'An oasis is a fertile water area surrounded by a desert; similarly, an island is a body of land surrounded by an ocean.',
+      },
+      {
+        id: 'verb-13',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'medium',
+        direction: 'Direction: Select the most appropriate word to complete the sentence.',
+        question: 'The diplomat was widely commended for his _______ negotiations, managing to avert conflict without offending either party.',
+        options: [
+          { id: 'a', text: 'reckless' },
+          { id: 'b', text: 'tactful' },
+          { id: 'c', text: 'belligerent' },
+          { id: 'd', text: 'complacent' },
+        ],
+        correctOptionId: 'b',
+        explanation: 'Tactful means having or showing skill and sensitivity in dealing with others or with difficult issues.',
+      },
+      {
+        id: 'verb-14',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'easy',
+        direction: 'Direction: Select the option that best explains the idiom.',
+        question: 'To take with a grain of salt',
+        options: [
+          { id: 'a', text: 'To add mineral seasoning to a dish' },
+          { id: 'b', text: 'To view something with a degree of skepticism or reservation' },
+          { id: 'c', text: 'To express overwhelming gratitude' },
+          { id: 'd', text: 'To accept criticism without resentment' },
+        ],
+        correctOptionId: 'b',
+        explanation: '"To take with a grain of salt" means to remain skeptical and not take something at face value.',
+      },
+      {
+        id: 'verb-15',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'medium',
+        direction: 'Direction: Choose the word which is the exact OPPOSITE of the given word.',
+        question: 'Ubiquitous',
+        options: [
+          { id: 'a', text: 'Omnipresent' },
+          { id: 'b', text: 'Rare' },
+          { id: 'c', text: 'Pervasive' },
+          { id: 'd', text: 'Universal' },
+        ],
+        correctOptionId: 'b',
+        explanation: 'Ubiquitous means present, appearing, or found everywhere. The opposite is rare or scarce.',
+      },
     ],
   },
   {
@@ -552,6 +632,81 @@ export const assessmentSections: Section[] = [
         correctOptionId: 'a',
         explanation: 'git cherry-pick allows you to select specific commits from one branch and apply them to another branch.',
       },
+      {
+        id: 'tech-11',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'medium',
+        question: 'In database management systems, which property of ACID ensures that a transaction, once committed, will survive subsequent hardware crashes or power failures?',
+        options: [
+          { id: 'a', text: 'Atomicity' },
+          { id: 'b', text: 'Consistency' },
+          { id: 'c', text: 'Isolation' },
+          { id: 'd', text: 'Durability' },
+        ],
+        correctOptionId: 'd',
+        explanation: 'Durability guarantees that once a transaction has been committed, it will remain committed even in the event of a system crash, typically by persisting to non-volatile transaction write-ahead logs.',
+      },
+      {
+        id: 'tech-12',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'hard',
+        question: 'In operating systems, what condition occurs when an excessive amount of memory paging causes the operating system to spend more time swapping pages than executing user processes?',
+        options: [
+          { id: 'a', text: 'Paging' },
+          { id: 'b', text: 'Thrashing' },
+          { id: 'c', text: 'Segmentation' },
+          { id: 'd', text: 'Starvation' },
+        ],
+        correctOptionId: 'b',
+        explanation: 'Thrashing occurs when the virtual memory subsystem is in constant state of paging, severely degrading overall system performance.',
+      },
+      {
+        id: 'tech-13',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'easy',
+        question: 'Which DNS record type is responsible for directly resolving a domain hostname to an IPv4 network address?',
+        options: [
+          { id: 'a', text: 'CNAME Record' },
+          { id: 'b', text: 'A Record' },
+          { id: 'c', text: 'AAAA Record' },
+          { id: 'd', text: 'MX Record' },
+        ],
+        correctOptionId: 'b',
+        explanation: 'An "A" (Address) record maps a hostname to a 32-bit IPv4 address. "AAAA" is used for 128-bit IPv6 addresses.',
+      },
+      {
+        id: 'tech-14',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'medium',
+        question: 'Which collision resolution technique in hash tables chains multiple keys hashing to the same bucket into a linked list?',
+        options: [
+          { id: 'a', text: 'Linear Probing' },
+          { id: 'b', text: 'Quadratic Probing' },
+          { id: 'c', text: 'Separate Chaining' },
+          { id: 'd', text: 'Double Hashing' },
+        ],
+        correctOptionId: 'c',
+        explanation: 'Separate chaining stores collided entries in a dynamic linked list or red-black tree attached to each bucket.',
+      },
+      {
+        id: 'tech-15',
+        type: 'mcq',
+        score: 1,
+        difficulty: 'hard',
+        question: 'According to Brewer\'s CAP theorem, which three guarantees can a distributed data store only deliver at most two of simultaneously?',
+        options: [
+          { id: 'a', text: 'Concurrency, Availability, Performance' },
+          { id: 'b', text: 'Consistency, Availability, Partition Tolerance' },
+          { id: 'c', text: 'Capacity, Accuracy, Portability' },
+          { id: 'd', text: 'Coherence, Authentication, Persistence' },
+        ],
+        correctOptionId: 'b',
+        explanation: 'The CAP theorem states that any distributed data system can simultaneously provide at most two out of Consistency, Availability, and Partition Tolerance.',
+      },
     ],
   },
   {
@@ -687,6 +842,144 @@ function solve() {
     }
     
     console.log(result);
+}
+
+solve();
+`,
+        },
+      },
+      {
+        id: 'code-med-2',
+        type: 'coding',
+        title: 'Maximum Contiguous Subarray Sum',
+        score: 5,
+        difficulty: 'medium',
+        problemStatement: `Given an array of integers, find the contiguous subarray (containing at least one number) which has the largest sum and print its sum.
+
+For example, given the array [-2, 1, -3, 4, -1, 2, 1, -5, 4], the contiguous subarray [4, -1, 2, 1] has the largest sum = 6.`,
+        inputFormat: [
+          'Line 1: space-separated integers representing the array elements',
+        ],
+        outputFormat: [
+          'Line 1: the maximum contiguous subarray sum',
+        ],
+        constraints: [
+          '1 \u2264 array.length \u2264 10^5',
+          '-10^4 \u2264 array[i] \u2264 10^4',
+        ],
+        sampleTestCases: [
+          {
+            id: 'tc-med2-1',
+            input: '-2 1 -3 4 -1 2 1 -5 4',
+            output: '6',
+            explanation: 'The subarray [4, -1, 2, 1] has the largest sum = 6.',
+          },
+          {
+            id: 'tc-med2-2',
+            input: '1',
+            output: '1',
+            explanation: 'Single element array produces sum = 1.',
+          },
+        ],
+        hiddenTestCases: [
+          {
+            id: 'tc-med2-h1',
+            input: '5 4 -1 7 8',
+            output: '23',
+            isHidden: true,
+          },
+          {
+            id: 'tc-med2-h2',
+            input: '-1',
+            output: '-1',
+            isHidden: true,
+          },
+          {
+            id: 'tc-med2-h3',
+            input: '1 2 3',
+            output: '6',
+            isHidden: true,
+          },
+        ],
+        starterCode: {
+          python: `import sys
+
+def solve():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    nums = [int(x) for x in tokens]
+    
+    max_so_far = nums[0]
+    curr_max = nums[0]
+    for i in range(1, len(nums)):
+        curr_max = max(nums[i], curr_max + nums[i])
+        max_so_far = max(max_so_far, curr_max)
+        
+    print(max_so_far)
+
+if __name__ == '__main__':
+    solve()
+`,
+          java: `import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Integer> list = new ArrayList<>();
+        while (sc.hasNextInt()) {
+            list.add(sc.nextInt());
+        }
+        if (list.isEmpty()) return;
+        
+        int maxSoFar = list.get(0);
+        int currMax = list.get(0);
+        for (int i = 1; i < list.size(); i++) {
+            currMax = Math.max(list.get(i), currMax + list.get(i));
+            maxSoFar = Math.max(maxSoFar, currMax);
+        }
+        System.out.println(maxSoFar);
+    }
+}
+`,
+          cpp: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int val;
+    vector<int> nums;
+    while (cin >> val) {
+        nums.push_back(val);
+    }
+    if (nums.empty()) return 0;
+    
+    int maxSoFar = nums[0];
+    int currMax = nums[0];
+    for (size_t i = 1; i < nums.size(); ++i) {
+        currMax = max(nums[i], currMax + nums[i]);
+        maxSoFar = max(maxSoFar, currMax);
+    }
+    cout << maxSoFar << endl;
+    return 0;
+}
+`,
+          javascript: `const fs = require('fs');
+
+function solve() {
+    const input = fs.readFileSync(0, 'utf-8').trim().split(/\\s+/);
+    if (!input || input.length === 0 || input[0] === '') return;
+    const nums = input.map(x => parseInt(x, 10));
+    
+    let maxSoFar = nums[0];
+    let currMax = nums[0];
+    for (let i = 1; i < nums.length; i++) {
+        currMax = Math.max(nums[i], currMax + nums[i]);
+        maxSoFar = Math.max(maxSoFar, currMax);
+    }
+    console.log(maxSoFar);
 }
 
 solve();
@@ -832,6 +1125,155 @@ function solve() {
     } else {
         console.log((2n * (k - oddCount)).toString());
     }
+}
+
+solve();
+`,
+        },
+      },
+      {
+        id: 'code-hard-2',
+        type: 'coding',
+        title: 'Longest Common Subsequence Length',
+        score: 5,
+        difficulty: 'hard',
+        problemStatement: `Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.
+
+A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters. (e.g., "ace" is a subsequence of "abcde" while "aec" is not). A common subsequence of two strings is a subsequence that is common to both strings.`,
+        inputFormat: [
+          'Line 1: text1 and text2 as space-separated strings (or two lines)',
+        ],
+        outputFormat: [
+          'Print a single integer representing the length of the longest common subsequence.',
+        ],
+        constraints: [
+          '1 \u2264 text1.length, text2.length \u2264 1000',
+          'text1 and text2 consist of only lowercase English characters.',
+        ],
+        sampleTestCases: [
+          {
+            id: 'tc-hard2-1',
+            input: 'abcde ace',
+            output: '3',
+            explanation: 'The longest common subsequence is "ace" and its length is 3.',
+          },
+          {
+            id: 'tc-hard2-2',
+            input: 'abc abc',
+            output: '3',
+            explanation: 'The longest common subsequence is "abc" and its length is 3.',
+          },
+        ],
+        hiddenTestCases: [
+          {
+            id: 'tc-hard2-h1',
+            input: 'abc def',
+            output: '0',
+            isHidden: true,
+          },
+          {
+            id: 'tc-hard2-h2',
+            input: 'oxcpqrsvwf shmtulskrw',
+            output: '2',
+            isHidden: true,
+          },
+        ],
+        starterCode: {
+          python: `import sys
+
+def solve():
+    tokens = sys.stdin.read().split()
+    if len(tokens) < 2:
+        return
+    s1, s2 = tokens[0], tokens[1]
+    m, n = len(s1), len(s2)
+    
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                
+    print(dp[m][n])
+
+if __name__ == '__main__':
+    solve()
+`,
+          java: `import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNext()) return;
+        String s1 = sc.next();
+        if (!sc.hasNext()) return;
+        String s2 = sc.next();
+        
+        int m = s1.length(), n = s2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        System.out.println(dp[m][n]);
+    }
+}
+`,
+          cpp: `#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    string s1, s2;
+    if (!(cin >> s1 >> s2)) return 0;
+    
+    int m = s1.length(), n = s2.length();
+    vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+    
+    for (int i = 1; i <= m; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            if (s1[i - 1] == s2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    cout << dp[m][n] << endl;
+    return 0;
+}
+`,
+          javascript: `const fs = require('fs');
+
+function solve() {
+    const input = fs.readFileSync(0, 'utf-8').trim().split(/\\s+/);
+    if (input.length < 2) return;
+    const s1 = input[0];
+    const s2 = input[1];
+    
+    const m = s1.length, n = s2.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (s1[i - 1] === s2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    console.log(dp[m][n]);
 }
 
 solve();
