@@ -8,7 +8,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-1',
         type: 'mcq',
-        topic: 'Problems on Trains',
         score: 1,
         difficulty: 'easy',
         question: 'A train 125 m long passes a man, running at 5 km/hr in the same direction in which the train is going, in 10 seconds. The speed of the train is:',
@@ -24,7 +23,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-2',
         type: 'mcq',
-        topic: 'Time and Distance',
         score: 1,
         difficulty: 'easy',
         question: 'A person crosses a 600 m long street in 5 minutes. What is his speed in km per hour?',
@@ -40,7 +38,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-3',
         type: 'mcq',
-        topic: 'Time and Work',
         score: 1,
         difficulty: 'easy',
         question: 'A can do a work in 15 days and B in 20 days. If they work on it together for 4 days, then the fraction of the work that is left is:',
@@ -56,7 +53,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-4',
         type: 'mcq',
-        topic: 'Profit and Loss',
         score: 1,
         difficulty: 'medium',
         question: 'The cost price of 20 articles is the same as the selling price of x articles. If the profit is 25%, then the value of x is:',
@@ -72,7 +68,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-5',
         type: 'mcq',
-        topic: 'Simple Interest',
         score: 1,
         difficulty: 'easy',
         question: 'A sum of money at simple interest amounts to Rs. 815 in 3 years and to Rs. 854 in 4 years. The sum is:',
@@ -88,7 +83,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-6',
         type: 'mcq',
-        topic: 'Compound Interest',
         score: 1,
         difficulty: 'medium',
         question: 'The compound interest on Rs. 30,000 at 7% per annum is Rs. 4,347. The period (in years) is:',
@@ -104,7 +98,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-7',
         type: 'mcq',
-        topic: 'Percentage',
         score: 1,
         difficulty: 'easy',
         question: 'Two students appeared at an examination. One of them secured 9 marks more than the other and his marks was 56% of the sum of their marks. The marks obtained by them are:',
@@ -120,7 +113,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-8',
         type: 'mcq',
-        topic: 'Problems on Ages',
         score: 1,
         difficulty: 'medium',
         question: 'Father is aged three times more than his son Ronit. After 8 years, he would be two and a half times of Ronit\'s age. After further 8 years, how many times would he be of Ronit\'s age?',
@@ -136,7 +128,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-9',
         type: 'mcq',
-        topic: 'Pipes and Cistern',
         score: 1,
         difficulty: 'medium',
         question: 'Three pipes A, B and C can fill a tank from empty to full in 30 minutes, 20 minutes, and 10 minutes respectively. When the tank is empty, all three pipes are opened. A, B and C discharge chemical solutions P, Q and R respectively. What is the proportion of the solution R in the liquid in the tank after 3 minutes?',
@@ -152,7 +143,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-10',
         type: 'mcq',
-        topic: 'Boats and Streams',
         score: 1,
         difficulty: 'easy',
         question: 'A boat can travel with a speed of 13 km/hr in still water. If the speed of the stream is 4 km/hr, find the time taken by the boat to go 68 km downstream.',
@@ -168,7 +158,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-11',
         type: 'mcq',
-        topic: 'Ratio and Proportion',
         score: 1,
         difficulty: 'easy',
         question: 'A sum of money is to be distributed among A, B, C, D in the proportion of 5 : 2 : 4 : 3. If C gets Rs. 1000 more than D, what is B\'s share?',
@@ -184,7 +173,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-12',
         type: 'mcq',
-        topic: 'Alligation or Mixture',
         score: 1,
         difficulty: 'medium',
         question: 'In what ratio must a grocer mix two varieties of tea worth Rs. 60 a kg and Rs. 65 a kg so that by selling the mixture at Rs. 68.20 a kg he may gain 10%?',
@@ -200,7 +188,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-13',
         type: 'mcq',
-        topic: 'Problems on H.C.F. and L.C.M.',
         score: 1,
         difficulty: 'easy',
         question: 'The H.C.F. of two numbers is 11 and their L.C.M. is 7700. If one of the numbers is 275, then the other is:',
@@ -216,7 +203,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-14',
         type: 'mcq',
-        topic: 'Average',
         score: 1,
         difficulty: 'easy',
         question: 'The average of 20 numbers is zero. Of them, at the most, how many may be greater than zero?',
@@ -232,7 +218,6 @@ export const assessmentSections: Section[] = [
       {
         id: 'apt-15',
         type: 'mcq',
-        topic: 'Probability',
         score: 1,
         difficulty: 'medium',
         question: 'In a box, there are 8 red, 7 blue and 6 green balls. One ball is picked up randomly. What is the probability that it is neither red nor green?',

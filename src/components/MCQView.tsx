@@ -23,15 +23,8 @@ export const MCQView: React.FC<MCQViewProps> = ({
 }) => {
   return (
     <div className="flex-1 flex flex-col h-full overflow-hidden bg-white">
-      {/* Top Meta Bar: Topic tag on left, Score & Difficulty on right */}
-      <div className="flex justify-between items-center px-8 pt-3 pb-2">
-        {question.topic ? (
-          <span className="text-[11px] font-medium text-[#1a73e8] bg-blue-50/80 border border-blue-200/60 px-2.5 py-0.5 rounded">
-            Topic: {question.topic}
-          </span>
-        ) : (
-          <div />
-        )}
+      {/* Top Meta Bar: Score & Difficulty aligned to top right - exactly matching screenshot */}
+      <div className="flex justify-end items-center px-8 pt-3 pb-2">
         <span className="text-[11px] text-gray-500 font-normal">
           Score: {question.score} | Difficulty: {question.difficulty}
         </span>
