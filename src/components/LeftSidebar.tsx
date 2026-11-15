@@ -23,54 +23,41 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
   const timeSpentMin = Math.floor(timeSpentSec / 60);
 
   return (
-    <aside className="w-14 shrink-0 flex flex-col items-center py-3 border-r border-gray-200 bg-white select-none">
+    <aside className="w-12 shrink-0 flex flex-col items-center py-2.5 border-r border-gray-200 bg-white select-none">
       {/* Top Question Time Badge - exactly matching the screenshot '0m', '1m', '2m' */}
       <div
-        className="w-9 h-6 mb-3 rounded flex items-center justify-center text-xs font-mono font-medium text-red-500 bg-red-50/80 border border-red-200 shadow-2xs"
+        className="w-8 h-6 mb-3 rounded flex items-center justify-center text-xs font-mono font-medium text-red-500 bg-[#fef2f2] border border-red-300 shadow-2xs"
         title={`Time spent on this question: ${timeSpentMin}m ${timeSpentSec % 60}s`}
       >
         {timeSpentMin}m
       </div>
 
       {/* Vertical list of Question Number buttons */}
-      <div className="flex-1 w-full overflow-y-auto overflow-x-hidden flex flex-col items-center space-y-1.5 px-1.5 py-1">
+      <div className="flex-1 w-full overflow-y-auto overflow-x-hidden flex flex-col items-center space-y-1 px-1">
         {questions.map((q, idx) => {
           const isSelected = idx === currentQuestionIndex;
           const isAnswered = !!answers[q.id];
           const isMarked = !!markedForReview[q.id];
 
-          // Determine button style matching the screenshot
-          let btnClasses = 'w-9 h-8 text-xs font-medium rounded transition flex items-center justify-center cursor-pointer relative ';
-
-          if (isSelected) {
-            // Selected question from screenshots has a light grayish background with subtle border
-            btnClasses += 'bg-gray-300 text-gray-900 font-semibold shadow-inner border border-gray-400';
-          } else if (isAnswered && isMarked) {
-            btnClasses += 'bg-purple-100 text-purple-800 border border-purple-300 hover:bg-purple-200';
-          } else if (isAnswered) {
-            btnClasses += 'bg-emerald-100 text-emerald-800 border border-emerald-300 hover:bg-emerald-200';
-          } else if (isMarked) {
-            btnClasses += 'bg-amber-100 text-amber-800 border border-amber-300 hover:bg-amber-200';
-          } else {
-            // Unanswered default
-            btnClasses += 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200';
-          }
-
           return (
             <button
               key={q.id}
               onClick={() => onSelectQuestion(idx)}
-              className={btnClasses}
+              className={`w-7 h-7 text-xs rounded transition flex items-center justify-center cursor-pointer relative ${
+                isSelected
+                  ? 'bg-[#cfd3db] text-gray-900 font-medium'
+                  : 'text-gray-700 hover:bg-gray-100 font-normal'
+              }`}
               title={`Question ${idx + 1}${isAnswered ? ' (Answered)' : ''}${isMarked ? ' (Marked for Review)' : ''}`}
             >
               <span>{idx + 1}</span>
 
-              {/* Status dot indicators */}
+              {/* Status indicator */}
               {isAnswered && !isSelected && (
-                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white"></span>
+                <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               )}
               {isMarked && !isAnswered && !isSelected && (
-                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-amber-500 ring-1 ring-white"></span>
+                <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-amber-500"></span>
               )}
             </button>
           );

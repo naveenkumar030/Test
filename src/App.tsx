@@ -38,15 +38,9 @@ export function App() {
   // Time spent per question in seconds: { [questionId]: number }
   const [questionTimes, setQuestionTimes] = useState<{ [qId: string]: number }>({});
 
-  // Overall test timer in seconds (60 minutes = 3600s)
-  const [timeRemaining, setTimeRemaining] = useState<number>(3600);
-
   // Modal and completion states
   const [isFinishModalOpen, setIsFinishModalOpen] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
-  // Proctoring & Fullscreen
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   // Identify current section & question
   const currentSection = sections.find((s) => s.id === activeSectionId) || sections[0];
@@ -69,32 +63,10 @@ export function App() {
           [activeQId]: (prev[activeQId] || 0) + 1,
         }));
       }
-
-      // Decrement overall remaining time
-      setTimeRemaining((prev) => {
-        if (prev <= 1) {
-          setIsSubmitted(true);
-          return 0;
-        }
-        return prev - 1;
-      });
     }, 1000);
 
     return () => clearInterval(interval);
   }, [isSubmitted]);
-
-  // Fullscreen toggle handler
-  const handleToggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen().catch(() => {});
-        setIsFullscreen(false);
-      }
-    }
-  };
 
   // Switch active section
   const handleSelectSection = (sectionId: string) => {
@@ -181,7 +153,6 @@ export function App() {
     setUserCodes({});
     setCodingSubmissions({});
     setQuestionTimes({});
-    setTimeRemaining(3600);
     setIsSubmitted(false);
     setIsFinishModalOpen(false);
     setActiveSectionId(sections[0].id);
@@ -194,20 +165,6 @@ export function App() {
     });
   };
 
-  // Count answered questions
-  let answeredCount = 0;
-  let totalQuestions = 0;
-  sections.forEach((sec) => {
-    sec.questions.forEach((q) => {
-      totalQuestions++;
-      if (q.type === 'coding') {
-        if (codingSubmissions[q.id]) answeredCount++;
-      } else {
-        if (answers[q.id]) answeredCount++;
-      }
-    });
-  });
-
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-white text-gray-900 font-sans">
       {/* Top Header & Section Tabs */}
@@ -215,12 +172,6 @@ export function App() {
         sections={sections}
         activeSectionId={activeSectionId}
         onSelectSection={handleSelectSection}
-        timeRemainingSeconds={timeRemaining}
-        isFullscreen={isFullscreen}
-        onToggleFullscreen={handleToggleFullscreen}
-        onFinishClick={() => setIsFinishModalOpen(true)}
-        answeredCount={answeredCount}
-        totalQuestions={totalQuestions}
       />
 
       {/* Main Workspace Body */}

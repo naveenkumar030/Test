@@ -22,16 +22,13 @@ export const CodingView: React.FC<CodingViewProps> = ({
   isSubmitted,
   onFinishTest,
 }) => {
-  // Current active language (default to python or java as seen in screenshots)
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(
     question.id === 'code-hard-1' ? 'java' : 'python'
   );
 
-  // Split pane ratio (percentage for left pane)
-  const [leftWidthPercent, setLeftWidthPercent] = useState<number>(46);
+  const [leftWidthPercent, setLeftWidthPercent] = useState<number>(45);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  // Custom Input State
   const [customInput, setCustomInput] = useState<string>(
     question.sampleTestCases[0]?.input || ''
   );
@@ -40,12 +37,10 @@ export const CodingView: React.FC<CodingViewProps> = ({
   const [customError, setCustomError] = useState<string | undefined>();
   const [hasRunCustom, setHasRunCustom] = useState<boolean>(false);
 
-  // Test Cases Execution State
   const [isRunningTestCases, setIsRunningTestCases] = useState<boolean>(false);
   const [testCasesResult, setTestCasesResult] = useState<ExecutionResult | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // Current code for the selected language
   const currentCode = userCode[selectedLanguage] || question.starterCode[selectedLanguage];
 
   const handleCodeChange = (newCode: string) => {
@@ -96,7 +91,6 @@ export const CodingView: React.FC<CodingViewProps> = ({
     }
   };
 
-  // Divider drag handlers
   const handleMouseDown = () => {
     setIsDragging(true);
   };
@@ -126,13 +120,11 @@ export const CodingView: React.FC<CodingViewProps> = ({
         <ProblemDetails question={question} />
       </div>
 
-      {/* Resizable Divider */}
+      {/* Thin Divider */}
       <div
         onMouseDown={handleMouseDown}
-        className="w-1.5 hover:w-2 bg-gray-200 hover:bg-blue-400 cursor-col-resize transition-all shrink-0 z-10 flex items-center justify-center group"
-      >
-        <div className="w-0.5 h-8 bg-gray-400 group-hover:bg-white rounded"></div>
-      </div>
+        className="w-1 hover:w-1.5 bg-gray-200 hover:bg-[#1a73e8] cursor-col-resize transition-all shrink-0 z-10"
+      />
 
       {/* Right Pane: Code Editor + Test Results Drawer */}
       <div style={{ width: `${100 - leftWidthPercent}%` }} className="h-full overflow-hidden flex flex-col">
