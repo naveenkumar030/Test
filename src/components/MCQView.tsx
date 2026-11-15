@@ -82,15 +82,15 @@ export const MCQView: React.FC<MCQViewProps> = ({
         </div>
       </div>
 
-      {/* Bottom Action Footer Bar: Previous and Next Buttons aligned right */}
+      {/* Bottom Action Footer Bar: Previous and Next Buttons - identical styling matching screenshot */}
       <div className="px-8 py-3.5 flex items-center justify-end space-x-3 bg-white shrink-0">
         <button
           onClick={onPrevious}
           disabled={!hasPrevious}
-          className={`px-4 py-1 text-xs rounded border transition cursor-pointer ${
+          className={`px-4 py-1.5 text-xs rounded-lg border transition cursor-pointer bg-white ${
             hasPrevious
-              ? 'text-gray-700 border-gray-300 hover:bg-gray-50'
-              : 'text-gray-300 border-gray-200 cursor-not-allowed'
+              ? 'border-[#b8c7db] text-[#1e3a8a] hover:bg-gray-50'
+              : 'border-[#b8c7db]/60 text-[#1e3a8a]/60 cursor-not-allowed'
           }`}
         >
           Previous
@@ -98,7 +98,7 @@ export const MCQView: React.FC<MCQViewProps> = ({
 
         <button
           onClick={onNext}
-          className="px-5 py-1 text-xs rounded border border-[#1a73e8] text-[#1a73e8] hover:bg-blue-50 transition cursor-pointer font-normal"
+          className="px-5 py-1.5 text-xs rounded-lg border border-[#b8c7db] text-[#1e3a8a] bg-white hover:bg-gray-50 transition cursor-pointer font-normal"
         >
           Next
         </button>
