@@ -7,7 +7,6 @@ import { MCQView } from './components/MCQView';
 import { CodingView } from './components/CodingView';
 import { FinishModal } from './components/FinishModal';
 import { ScorecardModal } from './components/ScorecardModal';
-import { ProctoringBar } from './components/ProctoringBar';
 
 export function App() {
   const sections = assessmentSections;
@@ -48,7 +47,6 @@ export function App() {
 
   // Proctoring & Fullscreen
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const [tabSwitchViolations, setTabSwitchViolations] = useState<number>(0);
 
   // Identify current section & question
   const currentSection = sections.find((s) => s.id === activeSectionId) || sections[0];
@@ -83,18 +81,6 @@ export function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isSubmitted]);
-
-  // Tab switch & visibility detector (standard assessment anti-cheat simulation)
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden && !isSubmitted) {
-        setTabSwitchViolations((prev) => prev + 1);
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, [isSubmitted]);
 
   // Fullscreen toggle handler
@@ -206,7 +192,6 @@ export function App() {
       'coding-medium': 0,
       'coding-hard': 0,
     });
-    setTabSwitchViolations(0);
   };
 
   // Count answered questions
@@ -275,9 +260,6 @@ export function App() {
           />
         )}
       </div>
-
-      {/* Floating Proctoring Camera Box & Anti-cheat alert */}
-      <ProctoringBar tabSwitchViolations={tabSwitchViolations} />
 
       {/* Finish Confirmation Modal */}
       <FinishModal
