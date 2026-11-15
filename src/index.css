@@ -36,6 +36,10 @@
   background: #999;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .font-mono-code {
   font-family: 'Consolas', 'Courier New', Courier, monospace;
 }
