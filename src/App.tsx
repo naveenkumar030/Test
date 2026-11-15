@@ -7,6 +7,7 @@ import { MCQView } from './components/MCQView';
 import { CodingView } from './components/CodingView';
 import { FinishModal } from './components/FinishModal';
 import { ScorecardModal } from './components/ScorecardModal';
+import { StrictFullscreenGuard } from './components/StrictFullscreenGuard';
 
 export function App() {
   const sections = assessmentSections;
@@ -212,6 +213,12 @@ export function App() {
           />
         )}
       </div>
+
+      {/* Strict Fullscreen Enforcement & Violation Protection */}
+      <StrictFullscreenGuard
+        onAutoSubmit={() => setIsSubmitted(true)}
+        isTestSubmitted={isSubmitted}
+      />
 
       {/* Finish Confirmation Modal */}
       <FinishModal
