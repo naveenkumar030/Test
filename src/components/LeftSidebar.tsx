@@ -150,10 +150,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
             {formattedExact}
           </span>
         ) : (
-          <span className="flex items-center text-[#dc2626]">
-            <span>{timeSpentMin}m</span>
-            <span className="w-1 h-1 rounded-full bg-[#dc2626] ml-0.5 animate-pulse opacity-80" />
-          </span>
+          <span className="text-[#dc2626] font-normal text-xs">{timeSpentMin}m</span>
         )}
 
         {/* Hover Tooltip */}
