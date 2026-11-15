@@ -6,6 +6,7 @@ interface ScorecardModalProps {
   sections: Section[];
   answers: { [questionId: string]: string };
   codingSubmissions: { [questionId: string]: boolean };
+  questionTimes?: { [questionId: string]: number };
   onRestart: () => void;
 }
 
@@ -13,6 +14,7 @@ export const ScorecardModal: React.FC<ScorecardModalProps> = ({
   sections,
   answers,
   codingSubmissions,
+  questionTimes = {},
   onRestart,
 }) => {
   const [activeTab, setActiveTab] = useState<'summary' | 'review'>('summary');
@@ -205,11 +207,17 @@ export const ScorecardModal: React.FC<ScorecardModalProps> = ({
                   const mcq = q as MCQQuestion;
                   const userAnswer = answers[q.id];
                   const isCorrect = userAnswer === mcq.correctOptionId;
+                  const qTime = questionTimes[q.id] || 0;
 
                   return (
                     <div key={q.id} className="p-5 bg-white rounded-xl border border-gray-200 space-y-3.5 shadow-2xs">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-gray-500 uppercase">Question {idx + 1}</span>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs font-bold text-gray-500 uppercase">Question {idx + 1}</span>
+                          <span className="text-[11px] text-gray-400 font-mono">
+                            • {Math.floor(qTime / 60)}m {qTime % 60}s spent
+                          </span>
+                        </div>
                         <div className="flex items-center space-x-1.5">
                           {isCorrect ? (
                             <span className="flex items-center space-x-1 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">

@@ -240,6 +240,7 @@ export function App() {
           sections={sections}
           answers={answers}
           codingSubmissions={codingSubmissions}
+          questionTimes={questionTimes}
           onRestart={handleRestart}
         />
       )}

@@ -20,9 +20,13 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
   answers,
   markedForReview,
 }) => {
+  const [showExactSeconds, setShowExactSeconds] = useState(false);
   const currentQuestion = questions[currentQuestionIndex];
+
   const timeSpentSec = (currentQuestion ? questionTimes[currentQuestion.id] : 0) || 0;
   const timeSpentMin = Math.floor(timeSpentSec / 60);
+  const timeSpentSecRem = timeSpentSec % 60;
+  const formattedExact = `${timeSpentMin}:${timeSpentSecRem.toString().padStart(2, '0')}`;
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -135,13 +139,29 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
   return (
     <aside className="w-13 shrink-0 flex flex-col items-center py-2.5 bg-[#edf0f3] border-r border-[#d1d5db] select-none h-full overflow-hidden">
-      {/* Top Question Time Badge */}
-      <div
-        className="w-9 h-8 mb-3 rounded-md flex items-center justify-center text-xs font-normal text-[#dc2626] bg-[#cfd3db] shadow-2xs shrink-0"
-        title={`Time spent on this question: ${timeSpentMin}m ${timeSpentSec % 60}s`}
+      {/* Top Question Time Badge - exactly matching the screenshot, click to toggle seconds/minutes */}
+      <button
+        onClick={() => setShowExactSeconds((prev) => !prev)}
+        className="w-9 h-8 mb-3 rounded-md flex items-center justify-center text-xs font-normal text-[#dc2626] bg-[#cfd3db] shadow-2xs shrink-0 cursor-pointer hover:bg-[#c2c7d0] transition relative group"
+        title={`Time spent on this question: ${timeSpentMin}m ${timeSpentSecRem}s (Click to toggle view)`}
       >
-        {timeSpentMin}m
-      </div>
+        {showExactSeconds ? (
+          <span className="text-[10px] font-mono font-medium tracking-tighter text-[#dc2626]">
+            {formattedExact}
+          </span>
+        ) : (
+          <span className="flex items-center text-[#dc2626]">
+            <span>{timeSpentMin}m</span>
+            <span className="w-1 h-1 rounded-full bg-[#dc2626] ml-0.5 animate-pulse opacity-80" />
+          </span>
+        )}
+
+        {/* Hover Tooltip */}
+        <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+          Time: {timeSpentMin}m {timeSpentSecRem}s
+          <div className="text-[9px] text-gray-400">Click to toggle seconds</div>
+        </div>
+      </button>
 
       {/* Main Questions & Scrollbar Workspace */}
       <div className="flex-1 w-full flex relative overflow-hidden">
