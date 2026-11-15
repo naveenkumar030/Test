@@ -71,16 +71,10 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
     }
   };
 
-  // Scroll arrows
+  // Scroll arrow up
   const scrollUp = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ top: -70, behavior: 'smooth' });
-    }
-  };
-
-  const scrollDown = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ top: 70, behavior: 'smooth' });
     }
   };
 
@@ -200,11 +194,11 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
             &#9650;
           </button>
 
-          {/* Track and Decreased Size Draggable Dark Thumb */}
+          {/* Track and Draggable Dark Thumb */}
           <div
             ref={trackRef}
             onClick={handleTrackClick}
-            className="flex-1 w-2 relative cursor-pointer flex justify-center"
+            className="flex-1 w-2 relative cursor-pointer flex justify-center pb-2"
           >
             {/* The vertical dark gray scroller thumb */}
             <div
@@ -221,15 +215,6 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
               title="Drag to scroll questions"
             />
           </div>
-
-          {/* Bottom Arrow ▼ */}
-          <button
-            onClick={scrollDown}
-            className="text-[#4b5563] hover:text-black cursor-pointer text-[8px] leading-none mt-1 select-none active:scale-90 transition-transform opacity-70 hover:opacity-100"
-            title="Scroll down"
-          >
-            &#9660;
-          </button>
         </div>
       </div>
     </aside>
