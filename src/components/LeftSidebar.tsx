@@ -145,11 +145,13 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
       {/* Main Questions & Scrollbar Workspace */}
       <div className="flex-1 w-full flex relative overflow-hidden">
-        {/* Scrollable Questions Column - with comfortable item height & spacing so scrolling is always active */}
+        {/* Scrollable Questions Column */}
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="w-full h-full overflow-y-scroll no-scrollbar flex flex-col items-center space-y-2.5 py-1 pl-1 pr-3 pb-24"
+          className={`w-full h-full overflow-y-auto no-scrollbar flex flex-col items-center space-y-2.5 py-1 ${
+            isAptitude ? 'pr-3 pb-24' : 'px-1'
+          }`}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {questions.map((q, idx) => {
@@ -183,39 +185,36 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
           })}
         </div>
 
-        {/* Scrollbar Track Column matching the exact screenshot */}
-        <div className="absolute right-1.5 top-0 bottom-1 flex flex-col items-center w-2">
-          {/* Top Arrow ▲ */}
-          <button
-            onClick={scrollUp}
-            className="text-[#4b5563] hover:text-black cursor-pointer text-[8px] leading-none mb-1 select-none active:scale-90 transition-transform"
-            title="Scroll up"
-          >
-            &#9650;
-          </button>
+        {/* Scrollbar Track Column - ONLY for Aptitude & Reasoning */}
+        {isAptitude && (
+          <div className="absolute right-1.5 top-0 bottom-1 flex flex-col items-center w-2">
+            {/* Top Arrow ▲ */}
+            <button
+              onClick={scrollUp}
+              className="text-[#4b5563] hover:text-black cursor-pointer text-[8px] leading-none mb-1 select-none active:scale-90 transition-transform"
+              title="Scroll up"
+            >
+              &#9650;
+            </button>
 
-          {/* Track and Draggable Dark Thumb */}
-          <div
-            ref={trackRef}
-            onClick={handleTrackClick}
-            className="flex-1 w-2 relative cursor-pointer flex justify-center pb-2"
-          >
-            {/* The vertical dark gray scroller thumb */}
+            {/* Track and Draggable Dark Thumb */}
             <div
-              onMouseDown={handleThumbMouseDown}
-              style={{
-                height: `${thumbHeight}px`,
-                transform: `translateY(${thumbTop}px)`,
-              }}
-              className={`${
-                isAptitude ? 'w-1' : 'w-[3px]'
-              } bg-[#4b5563] rounded-full transition-colors cursor-grab active:cursor-grabbing ${
-                isDragging ? 'bg-black' : 'hover:bg-gray-800'
-              }`}
-              title="Drag to scroll questions"
-            />
+              ref={trackRef}
+              onClick={handleTrackClick}
+              className="flex-1 w-2 relative cursor-pointer flex justify-center pb-2"
+            >
+              <div
+                onMouseDown={handleThumbMouseDown}
+                style={{
+                  height: `${thumbHeight}px`,
+                  transform: `translateY(${thumbTop}px)`,
+                }}
+                className="w-1 bg-[#4b5563] rounded-full transition-colors cursor-grab active:cursor-grabbing hover:bg-gray-800"
+                title="Drag to scroll questions"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </aside>
   );
