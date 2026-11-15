@@ -20,7 +20,6 @@ export const MCQView: React.FC<MCQViewProps> = ({
   onSelectOption,
   onPrevious,
   onNext,
-  hasPrevious,
 }) => {
   return (
     <div className="flex-1 flex flex-col h-full overflow-hidden bg-white">
@@ -82,23 +81,18 @@ export const MCQView: React.FC<MCQViewProps> = ({
         </div>
       </div>
 
-      {/* Bottom Action Footer Bar: Previous and Next Buttons - identical styling matching screenshot */}
-      <div className="px-8 py-3.5 flex items-center justify-end space-x-3 bg-white shrink-0">
+      {/* Bottom Action Footer Bar: Previous and Next Buttons - exact match for screenshot */}
+      <div className="px-8 py-3.5 flex items-center justify-end space-x-2.5 bg-white shrink-0">
         <button
           onClick={onPrevious}
-          disabled={!hasPrevious}
-          className={`px-4 py-1.5 text-xs rounded-lg border transition cursor-pointer bg-white ${
-            hasPrevious
-              ? 'border-[#b8c7db] text-[#1e3a8a] hover:bg-gray-50'
-              : 'border-[#b8c7db]/60 text-[#1e3a8a]/60 cursor-not-allowed'
-          }`}
+          className="px-3.5 py-1 text-xs rounded-[4px] border border-[#7ba4d5] text-[#2b6cb0] hover:bg-blue-50/40 transition cursor-pointer font-normal bg-white"
         >
           Previous
         </button>
 
         <button
           onClick={onNext}
-          className="px-5 py-1.5 text-xs rounded-lg border border-[#b8c7db] text-[#1e3a8a] bg-white hover:bg-gray-50 transition cursor-pointer font-normal"
+          className="px-4 py-1 text-xs rounded-[4px] border border-[#7ba4d5] text-[#2b6cb0] hover:bg-blue-50/40 transition cursor-pointer font-normal bg-white"
         >
           Next
         </button>
