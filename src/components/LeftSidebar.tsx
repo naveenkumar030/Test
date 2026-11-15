@@ -44,8 +44,12 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
   useEffect(() => {
     updateMetrics();
+    const timer = setTimeout(updateMetrics, 100);
     window.addEventListener('resize', updateMetrics);
-    return () => window.removeEventListener('resize', updateMetrics);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateMetrics);
+    };
   }, [updateMetrics, questions.length]);
 
   // Auto-scroll active question into view
@@ -58,39 +62,35 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
     }
   }, [currentQuestionIndex]);
 
-  // Handle native scroll event
+  // Handle native scroll
   const handleScroll = () => {
     if (scrollContainerRef.current) {
       setScrollTop(scrollContainerRef.current.scrollTop);
     }
   };
 
-  // Scroll arrow actions
+  // Scroll arrows
   const scrollUp = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ top: -50, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ top: -70, behavior: 'smooth' });
     }
   };
 
   const scrollDown = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ top: 50, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ top: 70, behavior: 'smooth' });
     }
   };
 
-  // Calculate thumb dimensions
-  const canScroll = scrollHeight > clientHeight;
-  const trackHeight = clientHeight > 30 ? clientHeight - 20 : 100;
-  const thumbHeight = canScroll
-    ? Math.max(35, Math.min(trackHeight, (clientHeight / scrollHeight) * trackHeight))
-    : trackHeight;
-  const maxScrollTop = scrollHeight - clientHeight;
-  const maxThumbTop = Math.max(1, trackHeight - thumbHeight);
-  const thumbTop = canScroll && maxScrollTop > 0
-    ? (scrollTop / maxScrollTop) * maxThumbTop
-    : 0;
+  // Decreased, compact scroller thumb size as requested
+  const trackHeight = Math.max(80, clientHeight - 24);
+  // Compact thumb height: between 40px and 70px
+  const thumbHeight = Math.min(70, Math.max(40, trackHeight * 0.28));
+  const maxScroll = Math.max(1, scrollHeight - clientHeight);
+  const maxThumbTravel = Math.max(1, trackHeight - thumbHeight);
+  const thumbTop = Math.min(maxThumbTravel, Math.max(0, (scrollTop / maxScroll) * maxThumbTravel));
 
-  // Thumb drag handling
+  // Drag handling
   const handleThumbMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -105,7 +105,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
     const handleMouseMove = (e: MouseEvent) => {
       if (!scrollContainerRef.current) return;
       const deltaY = e.clientY - dragStartY.current;
-      const scrollRatio = maxScrollTop / maxThumbTop;
+      const scrollRatio = maxScroll / maxThumbTravel;
       scrollContainerRef.current.scrollTop = dragStartScrollTop.current + deltaY * scrollRatio;
     };
 
@@ -119,16 +119,16 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging, maxScrollTop, maxThumbTop]);
+  }, [isDragging, maxScroll, maxThumbTravel]);
 
-  // Click on track to jump
+  // Track click to jump
   const handleTrackClick = (e: React.MouseEvent) => {
     if (!trackRef.current || !scrollContainerRef.current) return;
     const rect = trackRef.current.getBoundingClientRect();
     const clickY = e.clientY - rect.top;
-    const targetRatio = Math.max(0, Math.min(1, clickY / trackHeight));
+    const targetRatio = Math.max(0, Math.min(1, (clickY - thumbHeight / 2) / maxThumbTravel));
     scrollContainerRef.current.scrollTo({
-      top: targetRatio * maxScrollTop,
+      top: targetRatio * maxScroll,
       behavior: 'smooth',
     });
   };
@@ -137,7 +137,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
     <aside className="w-13 shrink-0 flex flex-col items-center py-2.5 bg-[#edf0f3] border-r border-[#d1d5db] select-none h-full overflow-hidden">
       {/* Top Question Time Badge */}
       <div
-        className="w-9 h-8 mb-4 rounded-md flex items-center justify-center text-xs font-normal text-[#dc2626] bg-[#cfd3db] shadow-2xs shrink-0"
+        className="w-9 h-8 mb-3 rounded-md flex items-center justify-center text-xs font-normal text-[#dc2626] bg-[#cfd3db] shadow-2xs shrink-0"
         title={`Time spent on this question: ${timeSpentMin}m ${timeSpentSec % 60}s`}
       >
         {timeSpentMin}m
@@ -145,11 +145,11 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
       {/* Main Questions & Scrollbar Workspace */}
       <div className="flex-1 w-full flex relative overflow-hidden">
-        {/* Scrollable Questions Column */}
+        {/* Scrollable Questions Column - with comfortable item height & spacing so scrolling is always active */}
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="w-full h-full overflow-y-auto no-scrollbar flex flex-col items-center space-y-1.5 py-1 pl-1 pr-3"
+          className="w-full h-full overflow-y-scroll no-scrollbar flex flex-col items-center space-y-2.5 py-1 pl-1 pr-3 pb-24"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {questions.map((q, idx) => {
@@ -162,7 +162,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
                 key={q.id}
                 ref={isSelected ? selectedBtnRef : undefined}
                 onClick={() => onSelectQuestion(idx)}
-                className={`w-9 h-8 text-xs rounded-md transition flex items-center justify-center cursor-pointer relative shrink-0 ${
+                className={`w-9 h-8 text-xs rounded-md transition-all flex items-center justify-center cursor-pointer relative shrink-0 ${
                   isSelected
                     ? 'bg-[#cfd3db] text-[#374151] font-normal shadow-2xs'
                     : 'text-[#4b5563] hover:bg-black/5 font-normal'
@@ -194,22 +194,23 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
             &#9650;
           </button>
 
-          {/* Track and Draggable Dark Thumb */}
+          {/* Track and Decreased Size Draggable Dark Thumb */}
           <div
             ref={trackRef}
             onClick={handleTrackClick}
             className="flex-1 w-2 relative cursor-pointer flex justify-center"
           >
-            {/* The vertical dark gray bar matching screenshot */}
+            {/* The vertical dark gray scroller thumb - sleek 3px width and compact height */}
             <div
               onMouseDown={handleThumbMouseDown}
               style={{
                 height: `${thumbHeight}px`,
                 transform: `translateY(${thumbTop}px)`,
               }}
-              className={`w-1 bg-[#4b5563] rounded-full transition-colors cursor-grab active:cursor-grabbing ${
-                isDragging ? 'bg-black' : 'hover:bg-gray-800'
+              className={`w-[3px] bg-[#4b5563] rounded-full transition-colors cursor-grab active:cursor-grabbing ${
+                isDragging ? 'bg-black w-[4px]' : 'hover:bg-gray-800'
               }`}
+              title="Drag to scroll questions"
             />
           </div>
 
