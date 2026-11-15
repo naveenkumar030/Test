@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import type { Question } from '../types/assessment';
 
 interface LeftSidebarProps {
@@ -23,35 +23,133 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
   const timeSpentMin = Math.floor(timeSpentSec / 60);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const selectedBtnRef = useRef<HTMLButtonElement>(null);
 
+  const [scrollTop, setScrollTop] = useState(0);
+  const [scrollHeight, setScrollHeight] = useState(1);
+  const [clientHeight, setClientHeight] = useState(1);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartY = useRef(0);
+  const dragStartScrollTop = useRef(0);
+
+  // Measure container dimensions
+  const updateMetrics = useCallback(() => {
+    if (scrollContainerRef.current) {
+      setScrollTop(scrollContainerRef.current.scrollTop);
+      setScrollHeight(scrollContainerRef.current.scrollHeight);
+      setClientHeight(scrollContainerRef.current.clientHeight);
+    }
+  }, []);
+
+  useEffect(() => {
+    updateMetrics();
+    window.addEventListener('resize', updateMetrics);
+    return () => window.removeEventListener('resize', updateMetrics);
+  }, [updateMetrics, questions.length]);
+
+  // Auto-scroll active question into view
+  useEffect(() => {
+    if (selectedBtnRef.current) {
+      selectedBtnRef.current.scrollIntoView({
+        block: 'nearest',
+        behavior: 'smooth',
+      });
+    }
+  }, [currentQuestionIndex]);
+
+  // Handle native scroll event
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      setScrollTop(scrollContainerRef.current.scrollTop);
+    }
+  };
+
+  // Scroll arrow actions
   const scrollUp = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ top: -60, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ top: -50, behavior: 'smooth' });
     }
   };
 
   const scrollDown = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ top: 60, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ top: 50, behavior: 'smooth' });
     }
   };
 
+  // Calculate thumb dimensions
+  const canScroll = scrollHeight > clientHeight;
+  const trackHeight = clientHeight > 30 ? clientHeight - 20 : 100;
+  const thumbHeight = canScroll
+    ? Math.max(35, Math.min(trackHeight, (clientHeight / scrollHeight) * trackHeight))
+    : trackHeight;
+  const maxScrollTop = scrollHeight - clientHeight;
+  const maxThumbTop = Math.max(1, trackHeight - thumbHeight);
+  const thumbTop = canScroll && maxScrollTop > 0
+    ? (scrollTop / maxScrollTop) * maxThumbTop
+    : 0;
+
+  // Thumb drag handling
+  const handleThumbMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+    dragStartY.current = e.clientY;
+    dragStartScrollTop.current = scrollContainerRef.current ? scrollContainerRef.current.scrollTop : 0;
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!scrollContainerRef.current) return;
+      const deltaY = e.clientY - dragStartY.current;
+      const scrollRatio = maxScrollTop / maxThumbTop;
+      scrollContainerRef.current.scrollTop = dragStartScrollTop.current + deltaY * scrollRatio;
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, maxScrollTop, maxThumbTop]);
+
+  // Click on track to jump
+  const handleTrackClick = (e: React.MouseEvent) => {
+    if (!trackRef.current || !scrollContainerRef.current) return;
+    const rect = trackRef.current.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    const targetRatio = Math.max(0, Math.min(1, clickY / trackHeight));
+    scrollContainerRef.current.scrollTo({
+      top: targetRatio * maxScrollTop,
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <aside className="w-13 shrink-0 flex flex-col items-center py-2.5 bg-[#edf0f3] border-r border-[#d1d5db] select-none h-full">
-      {/* Top Question Time Badge - exactly matching the screenshot with solid gray box and red text */}
+    <aside className="w-13 shrink-0 flex flex-col items-center py-2.5 bg-[#edf0f3] border-r border-[#d1d5db] select-none h-full overflow-hidden">
+      {/* Top Question Time Badge */}
       <div
-        className="w-9 h-8 mb-4 rounded-md flex items-center justify-center text-xs font-normal text-[#dc2626] bg-[#cfd3db] shadow-2xs"
+        className="w-9 h-8 mb-4 rounded-md flex items-center justify-center text-xs font-normal text-[#dc2626] bg-[#cfd3db] shadow-2xs shrink-0"
         title={`Time spent on this question: ${timeSpentMin}m ${timeSpentSec % 60}s`}
       >
         {timeSpentMin}m
       </div>
 
-      {/* Question numbers area with integrated scroll bar & arrows */}
-      <div className="flex-1 w-full flex items-start justify-center relative overflow-hidden">
+      {/* Main Questions & Scrollbar Workspace */}
+      <div className="flex-1 w-full flex relative overflow-hidden">
         {/* Scrollable Questions Column */}
         <div
           ref={scrollContainerRef}
-          className="w-full h-full overflow-y-auto no-scrollbar flex flex-col items-center space-y-1.5 py-1 pr-3"
+          onScroll={handleScroll}
+          className="w-full h-full overflow-y-auto no-scrollbar flex flex-col items-center space-y-1.5 py-1 pl-1 pr-3"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {questions.map((q, idx) => {
@@ -62,6 +160,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
             return (
               <button
                 key={q.id}
+                ref={isSelected ? selectedBtnRef : undefined}
                 onClick={() => onSelectQuestion(idx)}
                 className={`w-9 h-8 text-xs rounded-md transition flex items-center justify-center cursor-pointer relative shrink-0 ${
                   isSelected
@@ -72,7 +171,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
               >
                 <span>{idx + 1}</span>
 
-                {/* Subtle answered indicator */}
+                {/* Status dot */}
                 {isAnswered && !isSelected && (
                   <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                 )}
@@ -84,24 +183,40 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
           })}
         </div>
 
-        {/* Custom Scrollbar Column matching screenshot exactly */}
-        <div className="absolute right-1.5 top-0 bottom-1 flex flex-col items-center justify-between w-2 pointer-events-none">
+        {/* Scrollbar Track Column matching the exact screenshot */}
+        <div className="absolute right-1.5 top-0 bottom-1 flex flex-col items-center w-2">
           {/* Top Arrow ▲ */}
           <button
             onClick={scrollUp}
-            className="pointer-events-auto text-[#4b5563] hover:text-black cursor-pointer text-[7px] leading-none mb-0.5"
+            className="text-[#4b5563] hover:text-black cursor-pointer text-[8px] leading-none mb-1 select-none active:scale-90 transition-transform"
             title="Scroll up"
           >
             &#9650;
           </button>
 
-          {/* Dark Gray Scrollbar Thumb */}
-          <div className="flex-1 w-1 bg-[#4b5563] rounded-full my-0.5 opacity-90"></div>
+          {/* Track and Draggable Dark Thumb */}
+          <div
+            ref={trackRef}
+            onClick={handleTrackClick}
+            className="flex-1 w-2 relative cursor-pointer flex justify-center"
+          >
+            {/* The vertical dark gray bar matching screenshot */}
+            <div
+              onMouseDown={handleThumbMouseDown}
+              style={{
+                height: `${thumbHeight}px`,
+                transform: `translateY(${thumbTop}px)`,
+              }}
+              className={`w-1 bg-[#4b5563] rounded-full transition-colors cursor-grab active:cursor-grabbing ${
+                isDragging ? 'bg-black' : 'hover:bg-gray-800'
+              }`}
+            />
+          </div>
 
-          {/* Bottom Arrow ▼ (optional for smooth control) */}
+          {/* Bottom Arrow ▼ */}
           <button
             onClick={scrollDown}
-            className="pointer-events-auto text-[#4b5563] hover:text-black cursor-pointer text-[7px] leading-none mt-0.5 opacity-60 hover:opacity-100"
+            className="text-[#4b5563] hover:text-black cursor-pointer text-[8px] leading-none mt-1 select-none active:scale-90 transition-transform opacity-70 hover:opacity-100"
             title="Scroll down"
           >
             &#9660;
