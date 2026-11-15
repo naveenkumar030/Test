@@ -214,6 +214,11 @@ export const ScorecardModal: React.FC<ScorecardModalProps> = ({
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                           <span className="text-xs font-bold text-gray-500 uppercase">Question {idx + 1}</span>
+                          {mcq.topic && (
+                            <span className="text-[10px] font-medium text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                              {mcq.topic}
+                            </span>
+                          )}
                           <span className="text-[11px] text-gray-400 font-mono">
                             • {Math.floor(qTime / 60)}m {qTime % 60}s spent
                           </span>

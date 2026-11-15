@@ -11,6 +11,7 @@ export interface MCQQuestion {
   id: string;
   type: 'mcq';
   direction?: string;
+  topic?: string;
   question: string;
   options: MCQOption[];
   correctOptionId: string;
