@@ -178,6 +178,7 @@ export function App() {
       <div className="flex-1 flex overflow-hidden">
         {/* Left Vertical Question Palette */}
         <LeftSidebar
+          sectionId={activeSectionId}
           questions={currentSection.questions}
           currentQuestionIndex={currentQuestionIndex}
           onSelectQuestion={handleSelectQuestion}

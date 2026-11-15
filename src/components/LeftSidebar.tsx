@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import type { Question } from '../types/assessment';
 
 interface LeftSidebarProps {
+  sectionId?: string;
   questions: Question[];
   currentQuestionIndex: number;
   onSelectQuestion: (index: number) => void;
@@ -11,6 +12,7 @@ interface LeftSidebarProps {
 }
 
 export const LeftSidebar: React.FC<LeftSidebarProps> = ({
+  sectionId,
   questions,
   currentQuestionIndex,
   onSelectQuestion,
@@ -82,10 +84,14 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
     }
   };
 
-  // Decreased, compact scroller thumb size as requested
+  const isAptitude = sectionId === 'aptitude';
+
+  // Scroller thumb size - increased for Aptitude & Reasoning to match screenshot media_1794758976476_1cc59d78.png
   const trackHeight = Math.max(80, clientHeight - 24);
-  // Compact thumb height: between 40px and 70px
-  const thumbHeight = Math.min(70, Math.max(40, trackHeight * 0.28));
+  const thumbHeight = isAptitude
+    ? Math.max(170, Math.min(trackHeight - 30, trackHeight * 0.75))
+    : Math.min(70, Math.max(40, trackHeight * 0.28));
+
   const maxScroll = Math.max(1, scrollHeight - clientHeight);
   const maxThumbTravel = Math.max(1, trackHeight - thumbHeight);
   const thumbTop = Math.min(maxThumbTravel, Math.max(0, (scrollTop / maxScroll) * maxThumbTravel));
@@ -200,15 +206,17 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
             onClick={handleTrackClick}
             className="flex-1 w-2 relative cursor-pointer flex justify-center"
           >
-            {/* The vertical dark gray scroller thumb - sleek 3px width and compact height */}
+            {/* The vertical dark gray scroller thumb */}
             <div
               onMouseDown={handleThumbMouseDown}
               style={{
                 height: `${thumbHeight}px`,
                 transform: `translateY(${thumbTop}px)`,
               }}
-              className={`w-[3px] bg-[#4b5563] rounded-full transition-colors cursor-grab active:cursor-grabbing ${
-                isDragging ? 'bg-black w-[4px]' : 'hover:bg-gray-800'
+              className={`${
+                isAptitude ? 'w-1' : 'w-[3px]'
+              } bg-[#4b5563] rounded-full transition-colors cursor-grab active:cursor-grabbing ${
+                isDragging ? 'bg-black' : 'hover:bg-gray-800'
               }`}
               title="Drag to scroll questions"
             />
