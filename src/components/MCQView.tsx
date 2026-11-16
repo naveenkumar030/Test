@@ -22,16 +22,16 @@ export const MCQView: React.FC<MCQViewProps> = ({
   onNext,
 }) => {
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden bg-white">
-      {/* Top Meta Bar: Score & Difficulty aligned to top right - exactly matching screenshot */}
-      <div className="flex justify-end items-center px-8 pt-3 pb-2">
-        <span className="text-[11px] text-gray-500 font-normal">
+    <div className="flex-1 flex flex-col h-full overflow-y-auto bg-white px-8 pt-3 pb-8">
+      {/* Top Meta Bar: Score & Difficulty aligned to top right - exactly matching photo */}
+      <div className="flex justify-end items-center mb-3">
+        <span className="text-[11px] text-gray-500 font-normal select-none">
           Score: {question.score} | Difficulty: {question.difficulty}
         </span>
       </div>
 
-      {/* Main Question & Options Body */}
-      <div className="flex-1 overflow-y-auto px-8 py-2 max-w-5xl">
+      {/* Main Question Body */}
+      <div className="w-full">
         {/* Direction Text (if any) */}
         {question.direction && (
           <div className="text-xs font-bold text-gray-900 mb-4 leading-relaxed">
@@ -40,11 +40,11 @@ export const MCQView: React.FC<MCQViewProps> = ({
         )}
 
         {/* Question Text */}
-        <div className="text-sm text-gray-900 font-normal mb-8 leading-relaxed whitespace-pre-line">
+        <div className="text-[13px] text-gray-900 font-normal mb-6 leading-relaxed whitespace-pre-line">
           {question.question}
         </div>
 
-        {/* Options List - styled exactly like the screenshot with light grey cards */}
+        {/* Options List - styled exactly like the photo with light grey cards */}
         <div className="space-y-3">
           {question.options.map((option) => {
             const isSelected = selectedOptionId === option.id;
@@ -52,7 +52,7 @@ export const MCQView: React.FC<MCQViewProps> = ({
               <div
                 key={option.id}
                 onClick={() => onSelectOption(option.id)}
-                className={`flex items-center px-4 py-3 rounded transition-all cursor-pointer select-none ${
+                className={`flex items-center px-4 py-3 rounded-[3px] transition-all cursor-pointer select-none ${
                   isSelected
                     ? 'bg-[#e2e8f1] border border-[#cbd5e1]'
                     : 'bg-[#edf0f4] hover:bg-[#e4e8ef] border border-transparent'
@@ -79,23 +79,23 @@ export const MCQView: React.FC<MCQViewProps> = ({
             );
           })}
         </div>
-      </div>
 
-      {/* Bottom Action Footer Bar: Previous and Next Buttons - exact match for screenshot */}
-      <div className="px-8 py-3.5 flex items-center justify-end space-x-2.5 bg-white shrink-0">
-        <button
-          onClick={onPrevious}
-          className="px-3.5 py-1 text-xs rounded-[4px] border border-[#7ba4d5] text-[#2b6cb0] hover:bg-blue-50/40 transition cursor-pointer font-normal bg-white"
-        >
-          Previous
-        </button>
+        {/* Action Buttons: Previous & Next placed directly below the options, aligned to the right edge */}
+        <div className="flex justify-end items-center space-x-3 mt-4">
+          <button
+            onClick={onPrevious}
+            className="px-4 py-1 text-xs rounded-[4px] border border-[#7ba4d5] text-[#2b6cb0] hover:bg-blue-50/40 transition cursor-pointer font-normal bg-white select-none active:scale-[0.98]"
+          >
+            Previous
+          </button>
 
-        <button
-          onClick={onNext}
-          className="px-4 py-1 text-xs rounded-[4px] border border-[#7ba4d5] text-[#2b6cb0] hover:bg-blue-50/40 transition cursor-pointer font-normal bg-white"
-        >
-          Next
-        </button>
+          <button
+            onClick={onNext}
+            className="px-4 py-1 text-xs rounded-[4px] border border-[#7ba4d5] text-[#2b6cb0] hover:bg-blue-50/40 transition cursor-pointer font-normal bg-white select-none active:scale-[0.98]"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
