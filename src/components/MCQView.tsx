@@ -84,14 +84,14 @@ export const MCQView: React.FC<MCQViewProps> = ({
         <div className="flex justify-end items-center space-x-3 mt-4">
           <button
             onClick={onPrevious}
-            className="px-4 py-1 text-xs rounded-[4px] border border-[#7ba4d5] text-[#2b6cb0] hover:bg-blue-50/40 transition cursor-pointer font-normal bg-white select-none active:scale-[0.98]"
+            className="px-4 py-1 text-xs rounded-[4px] border border-[#93b4db] text-[#1a73e8] hover:bg-blue-50/50 hover:border-[#1a73e8] transition cursor-pointer font-normal bg-white select-none active:scale-[0.98]"
           >
             Previous
           </button>
 
           <button
             onClick={onNext}
-            className="px-4 py-1 text-xs rounded-[4px] border border-[#7ba4d5] text-[#2b6cb0] hover:bg-blue-50/40 transition cursor-pointer font-normal bg-white select-none active:scale-[0.98]"
+            className="px-4 py-1 text-xs rounded-[4px] border border-[#93b4db] text-[#1a73e8] hover:bg-blue-50/50 hover:border-[#1a73e8] transition cursor-pointer font-normal bg-white select-none active:scale-[0.98]"
           >
             Next
           </button>
